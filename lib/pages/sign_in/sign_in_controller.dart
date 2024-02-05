@@ -97,7 +97,7 @@ class SignInController {
       dismissOnTap: true,
     );
     var result = await UserAPI.login(params: loginRequestEntity);
-    print(result);
+    // print(result.data?.toJson());
 
     if (result.code == 200) {
       try {

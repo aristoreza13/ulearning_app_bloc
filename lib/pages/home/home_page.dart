@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/pages/home/bloc/home_blocs.dart';
 import 'package:ulearning_app/pages/home/bloc/home_states.dart';
+import 'package:ulearning_app/pages/home/home_controller.dart';
 
 import '../../common/values/app_colors.dart';
 import 'widgets/home_page_widgets.dart';
@@ -15,11 +16,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late HomeController homeC;
+
+  @override
+  void initState() {
+    super.initState();
+    homeC = HomeController(context: context);
+    homeC.init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: buildAppBar(),
+        appBar: buildAppBar(homeC.userProfile.avatar!),
         body: BlocBuilder<HomeBlocs, HomeStates>(
           builder: (context, state) {
             return Container(
@@ -30,7 +40,8 @@ class _HomePageState extends State<HomePage> {
                     child: homePageText("Hello", color: AppColors.primaryThirdElementText),
                   ),
                   SliverToBoxAdapter(
-                    child: homePageText("Reza Aristo", color: AppColors.primaryText, top: 5),
+                    child: homePageText(homeC.userProfile.name.toString(),
+                        color: AppColors.primaryText, top: 5),
                   ),
                   SliverPadding(padding: EdgeInsets.only(top: 20.h)),
                   SliverToBoxAdapter(
@@ -69,4 +80,3 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 }
-
