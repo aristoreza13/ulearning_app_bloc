@@ -97,6 +97,8 @@ class SignInController {
       dismissOnTap: true,
     );
     var result = await UserAPI.login(params: loginRequestEntity);
+    print(result);
+
     if (result.code == 200) {
       try {
         Global.storageService
@@ -110,7 +112,7 @@ class SignInController {
       }
     } else {
       EasyLoading.dismiss();
-      toastInfo(msg: "Unknown error");
+      toastInfo(msg: "Unknown error (${result.code})");
     }
   }
 }

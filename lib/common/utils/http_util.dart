@@ -27,6 +27,8 @@ class HttpUtil {
       queryParameters: queryParameters,
     );
 
+    print("my response data is ${response.data}");
+
     return response.data;
   }
 }
