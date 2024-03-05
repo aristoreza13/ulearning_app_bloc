@@ -33,12 +33,16 @@ class StorageService {
     return prefs.remove(key);
   }
 
-  UserItem getUserProfile() {
+  String getUserToken(){
+    return prefs.getString(AppConstants.STORAGE_USER_TOKEN_KEY) ?? "";
+  }
+
+  UserItem? getUserProfile() {
     var profileOffline = prefs.getString(AppConstants.STORAGE_USER_PROFILE_KEY) ?? "";
     if (profileOffline.isNotEmpty) {
       return UserItem.fromJson(json.decode(profileOffline));
     }
 
-    return UserItem();
+    return null;
   }
 }

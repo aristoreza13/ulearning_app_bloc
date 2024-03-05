@@ -2,6 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/entities/course.dart';
 import 'package:ulearning_app/common/values/app_colors.dart';
 import 'package:ulearning_app/pages/home/bloc/home_blocs.dart';
 import 'package:ulearning_app/pages/home/bloc/home_events.dart';
@@ -27,8 +28,9 @@ AppBar buildAppBar(String avatar) {
                 width: 40.w,
                 height: 40.h,
                 decoration: BoxDecoration(
-                  image:
-                      DecorationImage(image: NetworkImage("${AppConstants.SERVER_API_URL}$avatar")),
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          "${AppConstants.SERVER_API_URL}$avatar")),
                 ),
               ),
             )
@@ -37,7 +39,8 @@ AppBar buildAppBar(String avatar) {
   );
 }
 
-Widget homePageText(String text, {Color color = AppColors.primaryText, int top = 20}) {
+Widget homePageText(String text,
+    {Color color = AppColors.primaryText, int top = 20}) {
   return Container(
     margin: EdgeInsets.only(top: top.h),
     child: Text(
@@ -197,8 +200,8 @@ Widget menuView() {
           children: [
             reusableText("Choose your course"),
             GestureDetector(
-              child:
-                  reusableText("See all", color: AppColors.primaryThirdElementText, fontSize: 14),
+              child: reusableText("See all",
+                  color: AppColors.primaryThirdElementText, fontSize: 14),
             ),
           ],
         ),
@@ -209,9 +212,11 @@ Widget menuView() {
           children: [
             reusableMenuText("All"),
             reusableMenuText("Popular",
-                textColor: AppColors.primaryThirdElementText, backgroundColor: Colors.white),
+                textColor: AppColors.primaryThirdElementText,
+                backgroundColor: Colors.white),
             reusableMenuText("Newest",
-                textColor: AppColors.primaryThirdElementText, backgroundColor: Colors.white),
+                textColor: AppColors.primaryThirdElementText,
+                backgroundColor: Colors.white),
           ],
         ),
       ),
@@ -239,22 +244,22 @@ Widget reusableMenuText(String menuText,
   );
 }
 
-Widget courseGrid() {
+Widget courseGrid(CourseItem item) {
   return Container(
     padding: EdgeInsets.all(12.w),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15.w),
-      image: const DecorationImage(
-        fit: BoxFit.fill,
-        image: AssetImage("assets/icons/Image(1).png"),
-      ),
+      image: DecorationImage(
+          fit: BoxFit.fill,
+          image:
+              NetworkImage("${AppConstants.SERVER_UPLOADS}${item.thumbnail}")),
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Best course for IT",
+          item.name ?? "",
           maxLines: 1,
           overflow: TextOverflow.fade,
           textAlign: TextAlign.left,
@@ -267,7 +272,7 @@ Widget courseGrid() {
         ),
         SizedBox(height: 5.h),
         Text(
-          "Flutter course",
+          item.description ?? "",
           maxLines: 1,
           overflow: TextOverflow.fade,
           textAlign: TextAlign.left,
